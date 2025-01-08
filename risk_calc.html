@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetic Risk Score Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .risk-info {
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+        .risk-info ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Diabetic Risk Score Calculator</h1>
+        <form id="diabeticForm">
+            <div class="form-group">
+                <label for="age">Age (years)</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="bmi">BMI</label>
+                <input type="number" id="bmi" name="bmi" value="15.5" required>
+            </div>
+            <div class="form-group">
+                <label for="fastingGlucose">Fasting Glucose (mg/dL)</label>
+                <input type="number" id="fastingGlucose" name="fastingGlucose" required>
+            </div>
+            <div class="form-group">
+                <label for="hba1c">HbA1c (%)</label>
+                <input type="number" step="0.1" id="hba1c" name="hba1c" required>
+            </div>
+            <div class="form-group">
+                <label for="insulinResistance">Insulin Resistance Index</label>
+                <input type="number" step="0.1" id="insulinResistance" name="insulinResistance" required>
+            </div>
+            <div class="form-group">
+                <label for="systolicBP">Systolic Blood Pressure (mmHg)</label>
+                <input type="number" id="systolicBP" name="systolicBP" required>
+            </div>
+            <div class="form-group">
+                <label for="diastolicBP">Diastolic Blood Pressure (mmHg)</label>
+                <input type="number" id="diastolicBP" name="diastolicBP" required>
+            </div>
+            <div class="form-group">
+                <label for="totalCholesterol">Total Cholesterol (mg/dL)</label>
+                <input type="number" id="totalCholesterol" name="totalCholesterol" required>
+            </div>
+            <div class="form-group">
+                <label for="triglycerides">Triglycerides (mg/dL)</label>
+                <input type="number" id="triglycerides" name="triglycerides" required>
+            </div>
+            <div class="form-group">
+                <label for="ldl">LDL Cholesterol (mg/dL)</label>
+                <input type="number" id="ldl" name="ldl" required>
+            </div>
+            <div class="form-group">
+                <label for="hdl">HDL Cholesterol (mg/dL)</label>
+                <input type="number" id="hdl" name="hdl" required>
+            </div>
+            <button type="button" onclick="calculateRisk()">Calculate Risk Score</button>
+        </form>
+        <div class="result" id="result"></div>
+        <div class="risk-info" id="riskInfo"></div>
+    </div>
+
+    <script>
+        function calculateRisk() {
+            try {
+                const age = parseFloat(document.getElementById('age').value);
+                const bmi = parseFloat(document.getElementById('bmi').value);
+                const fastingGlucose = parseFloat(document.getElementById('fastingGlucose').value);
+                const hba1c = parseFloat(document.getElementById('hba1c').value);
+                const insulinResistance = parseFloat(document.getElementById('insulinResistance').value);
+                const systolicBP = parseFloat(document.getElementById('systolicBP').value);
+                const diastolicBP = parseFloat(document.getElementById('diastolicBP').value);
+                const totalCholesterol = parseFloat(document.getElementById('totalCholesterol').value);
+                const triglycerides = parseFloat(document.getElementById('triglycerides').value);
+                const ldl = parseFloat(document.getElementById('ldl').value);
+                const hdl = parseFloat(document.getElementById('hdl').value);
+
+                const normalizedAge = age; // Placeholder: Add normalization formula
+                const normalizedBMI = bmi; // Placeholder: Add normalization formula
+                const normalizedFastingGlucose = fastingGlucose; // Placeholder: Add normalization formula
+                const normalizedHba1c = hba1c; // Placeholder: Add normalization formula
+                const normalizedInsulinResistance = insulinResistance; // Placeholder: Add normalization formula
+                const normalizedSystolicBP = systolicBP; // Placeholder: Add normalization formula
+                const normalizedDiastolicBP = diastolicBP; // Placeholder: Add normalization formula
+                const normalizedTotalCholesterol = totalCholesterol; // Placeholder: Add normalization formula
+                const normalizedTriglycerides = triglycerides; // Placeholder: Add normalization formula
+                const normalizedLDL = ldl; // Placeholder: Add normalization formula
+                const normalizedHDL = hdl; // Placeholder: Add normalization formula
+
+                let riskScore = (
+                    0.15 * normalizedAge +
+                    0.20 * normalizedBMI +
+                    0.25 * normalizedFastingGlucose +
+                    0.10 * normalizedHba1c +
+                    0.05 * normalizedInsulinResistance +
+                    0.05 * normalizedSystolicBP +
+                    0.05 * normalizedDiastolicBP +
+                    0.05 * normalizedTotalCholesterol +
+                    0.03 * normalizedTriglycerides +
+                    0.04 * normalizedLDL -
+                    0.03 * normalizedHDL
+                );
+
+                riskScore = Math.max(0, Math.min(1, riskScore));
+
+                document.getElementById('result').innerText = `Diabetic Risk Score: ${riskScore.toFixed(2)}`;
+
+                const riskInfo = document.getElementById('riskInfo');
+                let riskDetails = '<h3>Medical Risks and At-Home Solutions</h3><ul>';
+
+                if (riskScore < 0.3) {
+                    riskDetails += '<li>Low risk: Maintain healthy habits like regular exercise (e.g., daily walks or playing outside) and balanced meals with vegetables, lean proteins, and whole grains.</li>';
+                    riskDetails += '<li>Stay hydrated and monitor blood sugar regularly as advised by a healthcare provider.</li>';
+                } else if (riskScore < 0.6) {
+                    riskDetails += '<li>Moderate risk: Start reducing sugary drinks and processed foods. Opt for home-cooked meals with smaller portions.</li>';
+                    riskDetails += '<li>Engage in 30 minutes of moderate exercise (e.g., cycling, jogging) most days of the week.</li>';
+                    riskDetails += '<li>Monitor blood sugar levels more frequently and keep a log to share with your doctor.</li>';
+                } else {
+                    riskDetails += '<li>High risk: Immediate action required. Begin portion control and avoid high-carb, high-sugar foods.</li>';
+                    riskDetails += '<li>Focus on vegetables, lean proteins, and high-fiber foods (like oats and legumes).</li>';
+                    riskDetails += '<li>Seek medical advice promptly to tailor a diabetes management plan.</li>';
+                }
+
+                riskDetails += '</ul>';
+                riskInfo.innerHTML = riskDetails;
+            } catch (error) {
+                document.getElementBy
